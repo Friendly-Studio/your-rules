@@ -689,7 +689,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    category_name: Attribute.String;
+    category_name: Attribute.String & Attribute.Required & Attribute.Unique;
     products: Attribute.Relation<
       'api::category.category',
       'oneToMany',
@@ -713,6 +713,80 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
   };
 }
 
+export interface ApiOrderUkraineOrderUkraine extends Schema.CollectionType {
+  collectionName: 'order_ukraines';
+  info: {
+    singularName: 'order-ukraine';
+    pluralName: 'order-ukraines';
+    displayName: 'order_ukraine';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Attribute.String & Attribute.Required;
+    product: Attribute.String & Attribute.Required;
+    phone: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required;
+    full_name: Attribute.String & Attribute.Required;
+    city: Attribute.String & Attribute.Required;
+    address: Attribute.Text & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::order-ukraine.order-ukraine',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::order-ukraine.order-ukraine',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiOrderWorldOrderWorld extends Schema.CollectionType {
+  collectionName: 'order_worlds';
+  info: {
+    singularName: 'order-world';
+    pluralName: 'order-worlds';
+    displayName: 'order_world';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Attribute.String & Attribute.Required;
+    product: Attribute.String & Attribute.Required;
+    phone: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required;
+    full_name: Attribute.String & Attribute.Required;
+    full_shipping_address: Attribute.String & Attribute.Required;
+    State_Province_zip_code: Attribute.String & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::order-world.order-world',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::order-world.order-world',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiProductProduct extends Schema.CollectionType {
   collectionName: 'products';
   info: {
@@ -725,17 +799,17 @@ export interface ApiProductProduct extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    name: Attribute.String;
-    price: Attribute.Float;
-    description: Attribute.Text;
+    name: Attribute.String & Attribute.Required;
+    price: Attribute.Float & Attribute.Required;
+    description: Attribute.Text & Attribute.Required;
     category: Attribute.Relation<
       'api::product.product',
       'manyToOne',
       'api::category.category'
     >;
-    preview: Attribute.Media;
-    preview_hover: Attribute.Media;
-    card_gallery_images: Attribute.Media;
+    preview: Attribute.Media & Attribute.Required;
+    preview_hover: Attribute.Media & Attribute.Required;
+    card_gallery_images: Attribute.Media & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -771,6 +845,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
       'api::category.category': ApiCategoryCategory;
+      'api::order-ukraine.order-ukraine': ApiOrderUkraineOrderUkraine;
+      'api::order-world.order-world': ApiOrderWorldOrderWorld;
       'api::product.product': ApiProductProduct;
     }
   }

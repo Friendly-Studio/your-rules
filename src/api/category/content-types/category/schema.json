@@ -13,7 +13,9 @@
   "pluginOptions": {},
   "attributes": {
     "category_name": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "unique": true
     },
     "products": {
       "type": "relation",
